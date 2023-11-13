@@ -3,13 +3,13 @@ from torch.utils import data
 
 
 def dataset_factory(dataset_name, dataset_root, bs=32):
-    if 'mnist' in dataset_name:
+    if dataset_name.lower() == 'mnist':
         transform = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize((0.1307,), (0.3081,))
         ])
         dataset = datasets.MNIST(root=dataset_root, download=True, transform=transform)
-    elif 'cifar' in dataset_name:
+    elif dataset_name.lower() == 'cifar':
         transform = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize(mean=(0.4915, 0.4823, 0.4468),

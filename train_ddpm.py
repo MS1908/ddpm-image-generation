@@ -83,7 +83,7 @@ LR = 1e-4
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', type=str, default='mnist', choices=['mnist', 'cifar10', 'cifar100'])
+    parser.add_argument('--dataset', type=str, default='mnist', choices=['mnist', 'cifar'])
     parser.add_argument('--epoch', type=int, help='Number of training epochs', default=10)
     parser.add_argument('--bs', type=int, help='Train batch size', default=128)
     parser.add_argument('--wt-path', type=str, help='Path to save the trained parameters of model',
