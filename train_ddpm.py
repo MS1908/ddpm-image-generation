@@ -2,10 +2,10 @@ import argparse
 import os
 import torch
 from torch import optim
-from torchvision import utils
+from torch.utils import data
+from torchvision import utils, datasets, transforms
 from tqdm import tqdm
 
-from dataset_factory import dataset_factory
 from ddpm import DDPM, ContextUnet
 
 
@@ -94,7 +94,13 @@ if __name__ == '__main__':
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    dataloader, n_classes = dataset_factory(args.dataset, dataset_root='./data', bs=args.bs)
+    transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize((0.1307,), (0.3081,))
+    ])
+    dataset = datasets.MNIST(root='./data', download=True, transform=transform)
+    dataloader = data.DataLoader(dataset, batch_size=bs, shuffle=True, num_workers=4)
+    n_classes = 10
 
     ddpm = DDPM(
         nn_model=ContextUnet(in_channels=1, n_features=N_FEATURES, n_classes=10),
